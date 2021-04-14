@@ -1,0 +1,20 @@
+name: Test
+
+on: [push]
+
+jobs:
+  client:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Install
+      run: npm install
+      env:
+        CI: true
+    - name: Test
+      run: npm run test
+    - name: Build
+      run: npm run build
