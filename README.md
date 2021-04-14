@@ -1,5 +1,7 @@
 # CommandStacker
 
+[![Test](https://github.com/fskuteken/command-stacker/actions/workflows/test.yml/badge.svg)](https://github.com/fskuteken/command-stacker/actions/workflows/test.yml)
+
 A lightweight JavaScript utility library to undo and redo commands.
 
 ## Install
