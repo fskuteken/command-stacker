@@ -2,6 +2,10 @@
   "name": "command-stacker",
   "version": "0.1.0",
   "description": "Command stacker to control undo/redo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fskuteken/command-stacker"
+  },
   "main": "build/index.js",
   "files": [
     "build/index.js",
