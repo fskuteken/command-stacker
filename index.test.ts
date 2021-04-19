@@ -225,4 +225,20 @@ describe('CommandStacker', () => {
       })
     })
   })
+
+  describe('generics', () => {
+    test('accepts a generic command type', () => {
+      type CustomCommand = Command & { name: string }
+      const subject = new CommandStacker<CustomCommand>()
+      const command: CustomCommand = {
+        name: 'example',
+        run: jest.fn(),
+        undo: jest.fn()
+      }
+
+      const result = subject.run(command)
+
+      expect(result.name).toBe(command.name)
+    })
+  })
 })

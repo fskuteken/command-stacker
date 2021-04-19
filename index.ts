@@ -10,10 +10,10 @@ export type CommandStackerOptions = {
 /**
  * A class that stacks commands to manage undo and redo operations.
  */
-export default class CommandStacker {
-  undoStack: Command[]
+export default class CommandStacker<T extends Command = Command> {
+  undoStack: T[]
 
-  redoStack: Command[]
+  redoStack: T[]
 
   capacity: number
 
@@ -33,7 +33,7 @@ export default class CommandStacker {
    * @param command The command to run
    * @returns The command that ran
    */
-  run (command: Command): Command {
+  run (command: T): T {
     command.run()
 
     this.undoStack.push(command)
@@ -51,7 +51,7 @@ export default class CommandStacker {
    * Undoes the last command, if any
    * @returns The undone command or undefined
    */
-  undo (): Command | undefined {
+  undo (): T | undefined {
     var command = this.undoStack.pop()
 
     if (command) {
@@ -67,7 +67,7 @@ export default class CommandStacker {
    * Redoes the last undone command, if any
    * @returns The redone command or undefined
    */
-  redo (): Command | undefined {
+  redo (): T | undefined {
     var command = this.redoStack.pop()
 
     if (command) {

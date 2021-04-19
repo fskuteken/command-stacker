@@ -66,3 +66,25 @@ If the `redoStack` is empty, `undefined` is returned.
 ### `clear`
 
 Clears all commands from `undoStack` and `redoStack`.
+
+## Generics
+
+It is possible to define your own custom `Command` type and pass it as a generic argument to `CommandStacker`:
+
+```typescript
+type CustomCommand = Command & {
+  name: string
+}
+
+const commandStacker = new CommandStacker<CustomCommand>()
+
+let counter = 0
+
+const incrementCommand = {
+  name: 'increment',
+  run: counter++,
+  undo: counter--
+}
+
+commandStacker.run(command)
+```
