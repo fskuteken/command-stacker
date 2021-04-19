@@ -3,6 +3,57 @@ import CommandStacker, { Command } from './index'
 const createCommand = (): Command => ({ run: jest.fn(), undo: jest.fn() })
 
 describe('CommandStacker', () => {
+  describe('add', () => {
+    test('does not run the command', () => {
+      const subject = new CommandStacker()
+      const command = createCommand()
+
+      subject.add(command)
+
+      expect(command.run).not.toHaveBeenCalled()
+    })
+
+    test('stacks the command to undo', () => {
+      const subject = new CommandStacker()
+      const command = createCommand()
+
+      subject.add(command)
+
+      expect(subject.undoStack).toContain(command)
+    })
+
+    test('clears the redo stack', () => {
+      const subject = new CommandStacker()
+      const command = createCommand()
+      subject.redoStack.push(createCommand())
+
+      subject.add(command)
+
+      expect(subject.redoStack.length).toBe(0)
+    })
+
+    test('ensures capacity is not exceeded', () => {
+      const subject = new CommandStacker({ capacity: 3 })
+      const command = createCommand()
+      subject.add(createCommand())
+      subject.add(createCommand())
+      subject.add(createCommand())
+
+      subject.add(command)
+
+      expect(subject.undoStack.length).toBe(3)
+    })
+
+    test('returns the command', () => {
+      const subject = new CommandStacker()
+      const command = createCommand()
+
+      const result = subject.add(command)
+
+      expect(result).toBe(command)
+    })
+  })
+
   describe('run', () => {
     test('runs the command', () => {
       const subject = new CommandStacker()

@@ -29,13 +29,11 @@ export default class CommandStacker<T extends Command = Command> {
   }
 
   /**
-   * Runs a command and adds it to the undoStack
-   * @param command The command to run
-   * @returns The command that ran
+   * Adds a command to the undoStack without running it
+   * @param command The command to add
+   * @returns The added command
    */
-  run (command: T): T {
-    command.run()
-
+  add (command: T): T {
     this.undoStack.push(command)
 
     this.redoStack.splice(0, this.redoStack.length)
@@ -43,6 +41,19 @@ export default class CommandStacker<T extends Command = Command> {
     if (this.undoStack.length > this.capacity) {
       this.undoStack.splice(this.undoStack.length - 2, 1)
     }
+
+    return command
+  }
+
+  /**
+   * Runs a command and adds it to the undoStack
+   * @param command The command to run
+   * @returns The command that ran
+   */
+  run (command: T): T {
+    command.run()
+
+    this.add(command)
 
     return command
   }

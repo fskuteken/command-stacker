@@ -48,10 +48,13 @@ type Command = {
 The `CommandStacker` class has two arrays representing the commands it manages: `undoStack` and `redoStack`.
 It has the following methods:
 
+### `add`
+
+Adds a `Command` to the `undoStack` and clears the `redoStack`.
+
 ### `run`
 
-Runs a `Command` and pushes it to the `undoStack`.
-Also, clears the `redoStack`.
+Runs a `Command`, pushes it to the `undoStack` and clears the `redoStack`.
 
 ### `undo`
 
